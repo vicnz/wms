@@ -1,6 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { type DataTableFeatures } from '@/components/datatable-features'
 import { CollectionRecords } from '@lib/db.types'
+import { Button } from '../ui/button'
+import { ArrowUpRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 type ConcessionerCols = CollectionRecords['consessioners'] & {
   expand: {
@@ -30,17 +33,17 @@ export const ConcessionColumns = columnHelper.columns([
   columnHelper.accessor('created', {
     header: 'Created'
   }),
-  // columnHelper.display({
-  //   id: 'action',
-  //   cell: ({ row }) => {
-  //     return (
-  //       <Button asChild variant={'link'}>
-  //         <Link to={`/concessioner/${row.original.id}`}>
-  //           Details
-  //           <ArrowUpRight />
-  //         </Link>
-  //       </Button>
-  //     )
-  //   }
-  // })
+  columnHelper.display({
+    id: 'action',
+    cell: ({ row }) => {
+      return (
+        <Button asChild variant={'link'}>
+          <Link to={`/concessioner/${row.original.id}`}>
+            Details
+            <ArrowUpRight />
+          </Link>
+        </Button>
+      )
+    }
+  })
 ])

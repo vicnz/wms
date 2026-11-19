@@ -13,9 +13,9 @@ import Payment, { loader as getPayments } from './pages/Payment'
 import PageNotFound from './pages/not-found'
 import { Router } from '@lib/electron-router-dom'
 import RootErrorBoundary from './components/error-boundary'
-import DataTableLoading from './components/datatable-loading'
 import InterFont from './assets/Inter.ttf'
 import BillingSingle, { loader as getBilling } from './pages/Billing.id'
+import { SkeletonShimmer } from './components/skeleton-content'
 
 const font = new FontFace('Inter', `url(${InterFont})`)
 font
@@ -40,55 +40,55 @@ export default function AppRouterManager() {
               path="/accounts"
               element={<Accounts />}
               loader={getAccounts}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/account/:id"
               element={<AccountSingle />}
               loader={getAccount}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/concessioners"
               element={<Concessioners />}
               loader={getConcessioners}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/concessioner/:id"
               element={<ConcessionerSingle />}
               loader={getConcessioner}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/readings"
               element={<Readings />}
               loader={getReadings}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/reading/:id"
               element={<ReadingSingle />}
               loader={getReading}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/payments"
               element={<Payment />}
               loader={getPayments}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/billings"
               element={<Billing />}
               loader={getBillings}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route
               path="/billing/:id"
               element={<BillingSingle />}
               loader={getBilling}
-              hydrateFallbackElement={<DataTableLoading />}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route path="*" element={<PageNotFound />} />
           </Route>
