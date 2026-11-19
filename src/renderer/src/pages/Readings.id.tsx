@@ -3,13 +3,12 @@ import Layout from '@/components/layouts/default'
 import ProtectedRoute from '@/components/protected-route'
 import { AppSidebar } from '@/components/sidebars/default'
 import { Button } from '@/components/ui/button'
-import db from '@lib/db'
 import { SaveIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-export function loader({ request }) {
-  const client = db.getInstance()
-  const url = new URL(request.url)
+export function loader() {
+  // const client = db.getInstance()
+  // const url = new URL(request.url)
 }
 
 export default function ReadingsData() {

@@ -3,12 +3,11 @@ import Layout from '@/components/layouts/default'
 import ProtectedRoute from '@/components/protected-route'
 import { AppSidebar } from '@/components/sidebars/default'
 import { Button } from '@/components/ui/button'
-import db from '@lib/db'
 import { PlusIcon, SheetIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export async function loader() {
-  const client = db.getInstance()
+  // const client = db.getInstance()
   return null
 }
 

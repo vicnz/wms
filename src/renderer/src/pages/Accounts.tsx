@@ -3,7 +3,6 @@ import ProtectedRoute from '@/components/protected-route'
 import { AppSidebar } from '@/components/sidebars/default'
 import { Link, useLoaderData, useSearchParams } from 'react-router-dom'
 import pb from '@lib/db'
-import { CollectionRecords } from '@lib/db.types'
 import { DataTable } from '@/components/datatable'
 import { AccountColumns } from '@/components/columns/accounts'
 import { Button } from '@/components/ui/button'
@@ -11,12 +10,12 @@ import { ChevronLeft, ChevronRight, PlusIcon, SheetIcon } from 'lucide-react'
 import { PageBreadcrumb } from '@/components/breadcrumb'
 import { LocalSearch } from '@/components/search'
 
-type AccountsType = {
-  expand: {
-    user: CollectionRecords['consessioners']
-    meter: CollectionRecords['meters']
-  }
-} & CollectionRecords['accounts']
+// type AccountsType = {
+//   expand: {
+//     user: CollectionRecords['consessioners']
+//     meter: CollectionRecords['meters']
+//   }
+// } & CollectionRecords['accounts']
 
 export const loader = async ({ request }) => {
   const db = pb.getInstance()
@@ -58,7 +57,7 @@ export const loader = async ({ request }) => {
 }
 
 export default function Accounts() {
-  const { items, page, perPage, totalItems, totalPages } = useLoaderData<typeof loader>()
+  const { items, page, totalPages } = useLoaderData<typeof loader>()
 
   const [_, setSearchParams] = useSearchParams()
 

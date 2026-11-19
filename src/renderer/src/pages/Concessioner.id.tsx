@@ -62,7 +62,7 @@ type IFormSchema = z.infer<typeof formSchema>
 export default function ConcessionerItem() {
   const { data, registration } = useLoaderData<typeof loader>()
   const navigate = useNavigate()
-  const { AlertDialogComponent, prompt, confirm } = useAlertDialog()
+  const { AlertDialogComponent, confirm } = useAlertDialog()
 
   const form = useForm<IFormSchema>({
     resolver: zodResolver(formSchema),

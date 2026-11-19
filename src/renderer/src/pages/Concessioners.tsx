@@ -51,7 +51,7 @@ export const loader = async ({ request }) => {
 }
 
 export default function Concessioners() {
-  const { items, page, perPage, totalItems, totalPages } = useLoaderData<typeof loader>()
+  const { items, page,  totalPages } = useLoaderData<typeof loader>()
 
   const [_, setSearchParams] = useSearchParams()
 

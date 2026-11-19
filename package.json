@@ -1,9 +1,9 @@
 {
   "name": "wms",
-  "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "version": "0.0.9",
+  "description": "Water Billing Management System",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "v.adam.gonzales@gmail.com",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
@@ -69,22 +69,39 @@
     "typescript": "^5.9.3",
     "vite": "^7.2.6"
   },
-  "electron-builder": {
-    "build": {
-      "extraResources": [
-        {
-          "from": "database/pocketbase.exe",
-          "to": "pocketbase/pocketbase.exe"
-        },
-        {
-          "from": ".env",
-          "to": ".env"
-        },
-        {
-          "from": "database/pb_migrations",
-          "to": "pocketbase/pb_migrations"
-        }
-      ]
+  "build": {
+    "extraResources": [
+      {
+        "from": "database/pocketbase.exe",
+        "to": "data/pocketbase.exe"
+      },
+      {
+        "from": ".env",
+        "to": ".env"
+      },
+      {
+        "from": "database/pb_migrations",
+        "to": "data/pb_migrations"
+      },
+      {
+        "from": "database/pb_hooks",
+        "to": "data/pb_books"
+      },
+      {
+        "from": "database/pb_public",
+        "to": "data/pb_public"
+      }
+    ],
+    "appId": "com.vicnz.wms",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "vicnz",
+        "repo": "wms"
+      }
+    ],
+    "win": {
+      "target": "nsis"
     }
   }
 }

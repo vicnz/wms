@@ -21,6 +21,7 @@ function setRef<T>(ref: PossibleRef<T>, value: T) {
  * Accepts callback refs and RefObject(s)
  */
 function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
+    
     return (node) => {
         let hasCleanup = false;
         const cleanups = refs.map((ref) => {
@@ -47,6 +48,8 @@ function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
                 }
             };
         }
+
+        return undefined;
     };
 }
 

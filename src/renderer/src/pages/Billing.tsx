@@ -52,7 +52,7 @@ export async function loader({ request }) {
 }
 
 export default function BillingPage() {
-  const { items, page, perPage, totalItems, totalPages } = useLoaderData<typeof loader>()
+  const { items, page,  totalPages } = useLoaderData<typeof loader>()
 
   const [_, setSearchParams] = useSearchParams()
 

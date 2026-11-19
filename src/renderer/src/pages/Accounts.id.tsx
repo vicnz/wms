@@ -96,7 +96,7 @@ type IFormSchema = z.infer<typeof formSchema>
 
 export default function AccountsItem() {
   const revalidator = useRevalidator()
-  const [pending, startTransition] = useTransition()
+  const [pending] = useTransition()
   const { data } = useLoaderData<typeof loader>()
   const navigate = useNavigate()
   const { AlertDialogComponent, confirm } = useAlertDialog()

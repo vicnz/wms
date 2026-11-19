@@ -36,9 +36,9 @@ function createInitialSuperuser(binaryPath: string, dataDir: string): void {
 
 async function startPocketBase(): Promise<void> {
   const isDev = !app.isPackaged;
-  const binaryPath = isDev ? join(process.cwd(), 'database', 'pocketbase.exe') : join(process.resourcesPath, 'pocketbase', 'pocketbase.exe')
-  const migrationDir = isDev ? join(process.cwd(), 'database', 'pb_migrations') : join(process.resourcesPath, 'pocketbase', 'pb_migrations')
-  const dataDir = isDev ? join(process.cwd(), 'database', 'pb_data') : join(process.resourcesPath, 'pocketbase', 'pb_data')
+  const binaryPath = isDev ? join(process.cwd(), 'database', 'pocketbase.exe') : join(process.resourcesPath, 'data', 'pocketbase.exe')
+  const migrationDir = isDev ? join(process.cwd(), 'database', 'pb_migrations') : join(process.resourcesPath, 'data', 'pb_migrations')
+  const dataDir = isDev ? join(process.cwd(), 'database', 'pb_data') : join(process.resourcesPath, 'data', 'pb_data')
   const configuredAddress = process.env.POCKETBASE_URL
 
   if (!configuredAddress) {
@@ -64,7 +64,7 @@ async function startPocketBase(): Promise<void> {
       const response = await fetch(`${pocketbaseUrl}/api/health`)
       if (response.ok) return;
     } catch {
-      //Pocketbase is still stating
+      //Pocketbase is still starting
     }
 
     await new Promise((resolve) => setTimeout(resolve, 100))
