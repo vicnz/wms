@@ -5,5 +5,9 @@ out
 .eslintcache
 *.log*
 .env
-database/pb_data
-database/pocketbase.exe
+database/pb_data/auxiliary.db
+database/pb_data/auxiliary.db-shm
+database/pb_data/auxiliary.db-wal
+database/pb_data/data.db
+database/pb_data/data.db-shm
+database/pb_data/data.db-wal
