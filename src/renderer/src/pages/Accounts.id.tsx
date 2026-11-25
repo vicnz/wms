@@ -2,6 +2,7 @@ import Layout from '@/components/layouts/default'
 import ProtectedRoute from '@/components/protected-route'
 import { AppSidebar } from '@/components/sidebars/default'
 import { Link, useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
+import address from '@/assets/addressess.json'
 import pb from '@lib/db'
 import { PageBreadcrumb } from '@/components/breadcrumb'
 import { Button } from '@/components/ui/button'
@@ -147,6 +148,7 @@ export default function AccountsItem() {
           type: save.type
         })
         revalidator.revalidate()
+        navigate(-1);
       } catch (error) {
         console.log(error)
         console.error('server error')
@@ -186,6 +188,7 @@ export default function AccountsItem() {
           type: save.type
         })
         revalidator.revalidate()
+        navigate(-1);
         return
       } catch (error) {
         console.log(error)
@@ -198,6 +201,8 @@ export default function AccountsItem() {
   const w_owner = form.watch('owner')
   const w_user = form.watch('user')
   const w_same_address = form.watch('billing_address.same_as_service')
+  const district = form.watch('service_address.district')
+  const bill_district = form.watch('billing_address.district')
 
   useEffect(() => {
     console.log(form.formState.errors)
@@ -393,7 +398,14 @@ export default function AccountsItem() {
                             render={({ field, fieldState }) => (
                               <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel>District</FieldLabel>
-                                <Input {...field} />
+                                <Input {...field} list="district" />
+                                {address && (
+                                  <datalist id="district">
+                                    {address?.map((item, idx) => (
+                                      <option value={item?.label}>{item.label}</option>
+                                    ))}
+                                  </datalist>
+                                )}
                               </Field>
                             )}
                           />
@@ -403,7 +415,16 @@ export default function AccountsItem() {
                             render={({ field, fieldState }) => (
                               <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel>Suburb/Barangay</FieldLabel>
-                                <Input {...field} />
+                                <Input {...field} list="brgy" />
+                                {address && district && (
+                                  <datalist id="brgy">
+                                    {address
+                                      .filter((item) => item.label === district)[0]
+                                      ?.barangay?.map((item, idx) => (
+                                        <option key={idx}>{item}</option>
+                                      ))}
+                                  </datalist>
+                                )}
                               </Field>
                             )}
                           />
@@ -413,7 +434,16 @@ export default function AccountsItem() {
                             render={({ field, fieldState }) => (
                               <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel>Street</FieldLabel>
-                                <Input {...field} />
+                                <Input {...field} list="streets" />
+                                {address && district && (
+                                  <datalist id="streets">
+                                    {address
+                                      .filter((item) => item.label === district)[0]
+                                      ?.streets?.map((item, idx) => (
+                                        <option key={idx}>{item}</option>
+                                      ))}
+                                  </datalist>
+                                )}
                               </Field>
                             )}
                           />
@@ -454,7 +484,14 @@ export default function AccountsItem() {
                                 render={({ field, fieldState }) => (
                                   <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel>District</FieldLabel>
-                                    <Input {...field} />
+                                    <Input {...field} list="district" />
+                                    {address && (
+                                      <datalist id="district">
+                                        {address?.map((item, idx) => (
+                                          <option value={item?.label}>{item.label}</option>
+                                        ))}
+                                      </datalist>
+                                    )}
                                   </Field>
                                 )}
                               />
@@ -464,7 +501,16 @@ export default function AccountsItem() {
                                 render={({ field, fieldState }) => (
                                   <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel>Suburb/Barangay</FieldLabel>
-                                    <Input {...field} />
+                                    <Input {...field} list="brgy" />
+                                    {address && bill_district && (
+                                      <datalist id="brgy">
+                                        {address
+                                          .filter((item) => item.label === bill_district)[0]
+                                          ?.barangay?.map((item, idx) => (
+                                            <option key={idx}>{item}</option>
+                                          ))}
+                                      </datalist>
+                                    )}
                                   </Field>
                                 )}
                               />
@@ -474,7 +520,16 @@ export default function AccountsItem() {
                                 render={({ field, fieldState }) => (
                                   <Field data-invalid={fieldState.invalid}>
                                     <FieldLabel>Street</FieldLabel>
-                                    <Input {...field} />
+                                    <Input {...field} list="streets" />
+                                    {address && bill_district && (
+                                      <datalist id="streets">
+                                        {address
+                                          .filter((item) => item.label === bill_district)[0]
+                                          ?.streets?.map((item, idx) => (
+                                            <option key={idx}>{item}</option>
+                                          ))}
+                                      </datalist>
+                                    )}
                                   </Field>
                                 )}
                               />

@@ -97,7 +97,7 @@ export default function ReadingsPage() {
                   <span>Import</span>
                 </Button>
                 <Button asChild variant={'outline'}>
-                  <Link to="/">
+                  <Link to="/reading/new">
                     <PlusIcon /> New Reading
                   </Link>
                 </Button>

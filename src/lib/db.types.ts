@@ -18,6 +18,7 @@ export const Collections = {
 	Consessioners: "consessioners",
 	Meters: "meters",
 	Payments: "payments",
+	Rates: "rates",
 	Readings: "readings",
 	Users: "users",
 } as const
@@ -199,6 +200,17 @@ export type PaymentsRecord = {
 	updated: IsoAutoDateString
 }
 
+export type RatesRecord<Tvalues = unknown> = {
+	category?: string
+	created: IsoAutoDateString
+	description?: string
+	group?: string
+	id: string
+	type?: string
+	updated: IsoAutoDateString
+	values?: null | Tvalues
+}
+
 export const ReadingsTypeOptions = {
 	"manual": "manual",
 	"automated": "automated",
@@ -249,6 +261,7 @@ export type BillsBalanceResponse<Toriginal_amount = unknown, Tremaining_bill_bal
 export type ConsessionersResponse<Texpand = unknown> = Required<ConsessionersRecord> & AuthSystemFields<Texpand>
 export type MetersResponse<Texpand = unknown> = Required<MetersRecord> & BaseSystemFields<Texpand>
 export type PaymentsResponse<Texpand = unknown> = Required<PaymentsRecord> & BaseSystemFields<Texpand>
+export type RatesResponse<Tvalues = unknown, Texpand = unknown> = Required<RatesRecord<Tvalues>> & BaseSystemFields<Texpand>
 export type ReadingsResponse<Texpand = unknown> = Required<ReadingsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -267,6 +280,7 @@ export type CollectionRecords = {
 	consessioners: ConsessionersRecord
 	meters: MetersRecord
 	payments: PaymentsRecord
+	rates: RatesRecord
 	readings: ReadingsRecord
 	users: UsersRecord
 }
@@ -284,6 +298,7 @@ export type CollectionResponses = {
 	consessioners: ConsessionersResponse
 	meters: MetersResponse
 	payments: PaymentsResponse
+	rates: RatesResponse
 	readings: ReadingsResponse
 	users: UsersResponse
 }

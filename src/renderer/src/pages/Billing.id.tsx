@@ -4,15 +4,37 @@ import ProtectedRoute from '@/components/protected-route'
 import { AppSidebar } from '@/components/sidebars/default'
 import { Button } from '@/components/ui/button'
 import { SaveIcon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import pb from '@lib/db'
 
-export function loader() {
-  // const client = db.getInstance()
-  // const url = new URL(request.url)
+export const loader = async ({ params }) => {
+  const db = pb.getInstance()
+  const id = params.id
+
+  if (id === 'new') {
+    return {
+      data: undefined
+    }
+  }
+
+  try {
+    const result = await db.collection('readings').getOne(id, {
+      expand: 'accounts_via_user'
+    })
+    // return result.items
+    return {
+      data: result
+    }
+  } catch (error) {
+    console.log(error)
+    //@ts-ignore
+    return { data: undefined }
+  }
 }
 
 export default function BillingSingle() {
-    const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [search, setSearch] = useSearchParams();
   return (
     <ProtectedRoute>
       <div className="h-screen w-screen grid place-items-center">
@@ -32,15 +54,13 @@ export default function BillingSingle() {
                 <SaveIcon />
                 <span>Save</span>
               </Button>
-              <Button variant={'outline'} onClick={() => navigate(-1) }>
+              <Button variant={'outline'} onClick={() => navigate(-1)}>
                 <span>Cancel</span>
               </Button>
             </>
           }
         >
-          <div className="px-6 py-4 space-y-2">
-            
-          </div>
+          <div className="px-6 py-4 space-y-2"></div>
         </Layout>
       </div>
     </ProtectedRoute>

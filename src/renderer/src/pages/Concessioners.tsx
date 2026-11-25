@@ -4,7 +4,7 @@ import { AppSidebar } from '@/components/sidebars/default'
 import { Link, useLoaderData, useSearchParams } from 'react-router-dom'
 import pb from '@lib/db'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight, PlusCircle, SheetIcon } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { DataTable } from '@/components/datatable'
 import { ConcessionColumns } from '@/components/columns/concessioners'
 import { LocalSearch } from '@/components/search'
@@ -76,13 +76,9 @@ export default function Concessioners() {
                 ]}
               />
               <div className="flex-1"></div>
-              <Button variant="outline" disabled>
-                <SheetIcon/>
-                <span>Import</span>
-              </Button>
-              <Button asChild >
+              <Button asChild variant={'outline'}>
                 <Link to="/concessioner/new">
-                  <PlusCircle /> Register
+                  <Plus /> Register Client
                 </Link>
               </Button>
             </>

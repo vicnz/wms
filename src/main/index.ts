@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import path, { join } from 'path'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -11,6 +11,7 @@ const envPath = app.isPackaged ? path.join(process.resourcesPath, '.env') : path
 dotenv.config({ path: envPath });
 
 let pocketbase: ChildProcess | undefined;
+let forceClose = false;
 
 function createInitialSuperuser(binaryPath: string, dataDir: string): void {
   if (fs.existsSync(join(dataDir, 'data.db'))) return
@@ -38,7 +39,7 @@ async function startPocketBase(): Promise<void> {
   const isDev = !app.isPackaged;
   const binaryPath = isDev ? join(process.cwd(), 'database', 'pocketbase.exe') : join(process.resourcesPath, 'data', 'pocketbase.exe')
   const migrationDir = isDev ? join(process.cwd(), 'database', 'pb_migrations') : join(process.resourcesPath, 'data', 'pb_migrations')
-  const dataDir = isDev ? join(process.cwd(), 'database', 'pb_data') : join(process.resourcesPath, 'data', 'pb_data')
+  const dataDir = isDev ? join(process.cwd(), 'database', 'pb_data') : join(app.getPath('userData'), 'data', 'pb_data')
   const configuredAddress = process.env.POCKETBASE_URL
 
   if (!configuredAddress) {
@@ -79,7 +80,6 @@ function stopPocketBase(): void {
 }
 
 function createWindow(): void {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -103,27 +103,28 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // mainWindow.webContents.on('did-finish-load', async () => {
-  //   const result = await mainWindow.webContents.executeJavaScript(`
-  //   ({
-  //     url: location.href,
-  //     csp: document.querySelector(
-  //       'meta[http-equiv="Content-Security-Policy"]'
-  //     )?.content
-  //   })
-  // `);
+  mainWindow.on('close', async (e) => {
+    if (forceClose) return;
 
-  //   console.log('[CSP DEBUG]', result);
-  // });
-  // mainWindow.webContents.session.webRequest.onHeadersReceived(
-  //   (details, callback) => {
-  //     if (details.url.includes('localhost:5173')) {
-  //       console.log('[RESPONSE HEADERS]', details.responseHeaders);
-  //     }
+    // Stop the window from closing immediately
+    e.preventDefault();
 
-  //     callback({ responseHeaders: details.responseHeaders });
-  //   }
-  // );
+    const { response } = await dialog.showMessageBox(mainWindow, {
+      type: 'question',
+      buttons: ['Cancel', 'Close Window'],
+      defaultId: 0,
+      cancelId: 0,
+      title: 'Confirm Close',
+      message: 'Are you sure you want to close this window?',
+      detail: 'Any unsaved changes may be lost.',
+    });
+
+    if (response === 1) {
+      forceClose = true;
+      mainWindow.close();
+    }
+  });
+
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.

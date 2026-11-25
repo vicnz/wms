@@ -10,11 +10,13 @@ import Readings, { loader as getReadings } from './pages/Readings'
 import ReadingSingle, { loader as getReading } from './pages/Readings.id'
 import Billing, { loader as getBillings } from './pages/Billing'
 import Payment, { loader as getPayments } from './pages/Payment'
+import BillingSingle, { loader as getBilling } from './pages/Billing.id'
+import Rates, { loader as getRates } from './pages/Rates'
+import RateSingle, { loader as getRate } from './pages/Rates.id'
 import PageNotFound from './pages/not-found'
 import { Router } from '@lib/electron-router-dom'
 import RootErrorBoundary from './components/error-boundary'
 import InterFont from './assets/Inter.ttf'
-import BillingSingle, { loader as getBilling } from './pages/Billing.id'
 import { SkeletonShimmer } from './components/skeleton-content'
 
 const font = new FontFace('Inter', `url(${InterFont})`)
@@ -88,6 +90,18 @@ export default function AppRouterManager() {
               path="/billing/:id"
               element={<BillingSingle />}
               loader={getBilling}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
+            />
+            <Route
+              path="/rates"
+              element={<Rates />}
+              loader={getRates}
+              hydrateFallbackElement={<SkeletonShimmer type="table" />}
+            />
+            <Route
+              path="/rate/:id"
+              element={<RateSingle />}
+              loader={getRate}
               hydrateFallbackElement={<SkeletonShimmer type="table" />}
             />
             <Route path="*" element={<PageNotFound />} />

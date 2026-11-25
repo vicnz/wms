@@ -6,16 +6,11 @@ import pb from '@lib/db'
 import { DataTable } from '@/components/datatable'
 import { AccountColumns } from '@/components/columns/accounts'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight, PlusIcon, SheetIcon } from 'lucide-react'
+import { ChevronLeft, ChevronRight, PlusIcon } from 'lucide-react'
 import { PageBreadcrumb } from '@/components/breadcrumb'
 import { LocalSearch } from '@/components/search'
 
-// type AccountsType = {
-//   expand: {
-//     user: CollectionRecords['consessioners']
-//     meter: CollectionRecords['meters']
-//   }
-// } & CollectionRecords['accounts']
+
 
 export const loader = async ({ request }) => {
   const db = pb.getInstance()
@@ -82,10 +77,6 @@ export default function Accounts() {
                 ]}
               />
               <div className="flex-1"></div>
-              <Button variant="outline" disabled>
-                <SheetIcon />
-                <span>Import</span>
-              </Button>
               <Button asChild variant={'outline'}>
                 <Link to="/account/new">
                   <PlusIcon /> New Account
